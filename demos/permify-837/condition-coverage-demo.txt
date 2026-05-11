@@ -1,0 +1,89 @@
+initiating validation... 🚀
+schema is creating... 🚀
+  success
+relationships are creating... 🚀
+  success: document:1#system@system:1 
+  success: system:1#viewer@user:1 
+attributes are creating... 🚀
+checking scenarios... 🚀
+1.scenario: system branch only - covers the system branch without covering the rest of the view condition
+  checks:
+    success: user:1 view document:1 
+  entity_filters:
+  subject_filters:
+schema successfully created
+relationships successfully created
+assertions successfully passed
+SUCCESS
+initiating coverage analysis... 🚀
+schema coverage information:
+entity: user
+  uncovered relationships:
+  uncovered assertions:
+  coverage relationships percentage: 100%
+  coverage attributes percentage: 100%
+  coverage assertions percentage: 
+    system branch only: 100%
+entity: system
+  uncovered relationships:
+  uncovered assertions:
+    system branch only:
+    	system#view
+  coverage relationships percentage: 100%
+  coverage attributes percentage: 100%
+  coverage assertions percentage: 
+    system branch only: 0%
+entity: company
+  uncovered relationships:
+    - company#maintainer@user
+  uncovered assertions:
+    system branch only:
+    	company#maintain
+  coverage relationships percentage: 0%
+  coverage attributes percentage: 100%
+  coverage assertions percentage: 
+    system branch only: 0%
+entity: organization
+  uncovered relationships:
+    - organization#maintainer@user
+  uncovered assertions:
+    system branch only:
+    	organization#maintain
+  coverage relationships percentage: 0%
+  coverage attributes percentage: 100%
+  coverage assertions percentage: 
+    system branch only: 0%
+entity: team
+  uncovered relationships:
+    - team#viewer@user
+  uncovered assertions:
+    system branch only:
+    	team#view
+  coverage relationships percentage: 0%
+  coverage attributes percentage: 100%
+  coverage assertions percentage: 
+    system branch only: 0%
+entity: document
+  uncovered relationships:
+    - document#organization@organization
+    - document#team@team
+    - document#denied@user
+    - document#partner@user
+    - document#viewer@user
+    - document#company@company
+  uncovered assertions:
+  permission condition coverage:
+    system branch only:
+      view: 11%
+        - attribute is_public
+        - attribute is_partner
+        - relation partner
+        - relation viewer
+        - tuple_to_userset company.maintain
+        - tuple_to_userset organization.maintain
+        - tuple_to_userset team.view
+        - relation denied
+  coverage relationships percentage: 14%
+  coverage attributes percentage: 0%
+  coverage assertions percentage: 
+    system branch only: 100%

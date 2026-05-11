@@ -1,0 +1,52 @@
+schema: |-
+  entity user {}
+
+  entity system {
+    relation viewer @user
+    permission view = viewer
+  }
+
+  entity company {
+    relation maintainer @user
+    permission maintain = maintainer
+  }
+
+  entity organization {
+    relation maintainer @user
+    permission maintain = maintainer
+  }
+
+  entity team {
+    relation viewer @user
+    permission view = viewer
+  }
+
+  entity document {
+    relation system @system
+    relation partner @user
+    relation viewer @user
+    relation company @company
+    relation organization @organization
+    relation team @team
+    relation denied @user
+
+    attribute is_public boolean
+    attribute is_partner boolean
+
+    permission view = system.view or ((is_public or (is_partner and partner) or (viewer or company.maintain or organization.maintain or team.view)) not denied)
+  }
+
+relationships:
+  - document:1#system@system:1
+  - system:1#viewer@user:1
+
+attributes:
+
+scenarios:
+  - name: "system branch only"
+    description: "covers the system branch without covering the rest of the view condition"
+    checks:
+      - entity: "document:1"
+        subject: "user:1"
+        assertions:
+          view: true
